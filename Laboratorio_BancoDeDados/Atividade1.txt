@@ -1,0 +1,88 @@
+create table Pessoas(
+    id_pessoa serial,
+    nome varchar(30) not null,
+    cpf varchar (13) not null,
+    idade int not null,
+    profissao varchar (25),
+    
+    constraint pessoas_p primary key (id_pessoa)
+    );
+
+create table Telefone(
+    id_pessoa int,
+	numero varchar (13),
+    tipo varchar (20),
+    
+    foreign key (id_pessoa) references Pessoas(id_pessoa)
+);
+
+create table Experiencias (
+    id_pessoa int,
+	id_experiencia serial,
+    titulo varchar (30),
+    descricao varchar (30),
+    tempo int,
+    
+    constraint pk_id_experiencia primary key (id_experiencia),
+    foreign key fk_id_pessoa foreign key (id_pessoa) references Pessoas (id_pessoa)
+);
+
+create function retornarPessoa (int) returns table(nome varchar,cpf varchar) as $$
+	declare 
+    	id_pessoa alias for $1;
+    begin 
+    	return query select pessoa.nome, pessa.cpf for Pessoas pessoa where pessoa.id_pessoa = id_pessoa;
+    end;
+language 'plpgsql'$$;
+
+create function pessoaTelefone (int ) returns table(nome varchar, cpf varchar, num int, tipo varchar ) as $$
+	declare
+    	id_pessoa alias for $1;
+     begin
+     	return query select pessoa.nome, pessoa.cpf, telefone.num, telefone.tipo from Pessoas pessoa inner join Telefone telefone on telefone.id_pessoa = id_pessoa;
+	end;
+$$ language 'plpgsql';
+
+create function cadastroPessoa(varchar(30), varchar (13),int, varchar (25)) returns void as $$
+	declare
+    	nome alias for $1;
+        cpf alias for $2;
+        profissao alias for $3;
+        telefone alias for $4;
+     begin
+     	insert into Pessoas (nome, cpf, profissao, idade) values (nome, cpf, profissao, idade);
+     end;
+$$ language 'plpgsql';
+
+create function cadastroTelefone(int, varchar (13), tipo varchar (20)) returns void as $$
+	declare
+    	id_pessoa alias for $1;
+        numero alias for $2;
+        tipo alias for $3;
+     begin 
+     	insert into Telefones(id_pessoa, numero, tipo) values (id_pessoa, numero, tipo);
+     end;
+ $$ language 'plpgsql';
+   
+   create function cadastroExperiencia (int, varchar(30), varchar(30), int) returns void as $$
+   		declare
+            id_pessoa alias for $1;
+            titulo alias for $2;
+            descricao alias for $3;
+            tempo alias for $4;
+   		begin
+    		insert into Experiencia (id_pessoa, titulo, descricao, tempo) values (id_pessoa, titulo, descricao, tempo);
+   		end;
+   $$ language 'plpgsql';
+   
+   create function apagaPessoa(int) returns void as $$
+   		declare
+        	id_pessoa alias for $1;
+        begin
+         	delete from Pessoas pessoa where pessoa.id_pessoa = id_pessoa;
+            delete from Telefone telefone where telefone.id_pessoa = id_pessoa;
+            delete from Experiencia experiencia where experiencia.id_pessoa = id_pessoa;
+   		end;
+   $$ language 'plpgsql';
+
+

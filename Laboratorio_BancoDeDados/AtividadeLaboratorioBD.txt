@@ -1,0 +1,37 @@
+insert into clientes(nome, endereco, telefone) values
+('Diego kazadi','Dom pedro 092', '(83)99683-4496'),
+('Manix Manionga','Panzu 01', '(82)96896-6968'),
+('Martine Kalunda','Panzu 01', '(81)93236-1268'),
+('Valencia Luputa','Panzu 01', '(83)96356-6985'),
+('Milú Nascimento','Panzu 01', '(84)96896-6968'),
+('Angeline kazadi','Panzu 01', '(86)96874-6968'),
+('Alexia Martine','Lutunu 03', '(85)85896-6968');
+
+insert into vendedores (nome, matricula) values
+('Patrick', '12365'),
+('Zadio', '23456'),
+('Lumu', '34567'),
+('Luck Man', '45678'),
+('Jacob', '56789'),
+('Yves', '67896'),
+('Rebecca', '96321');
+
+insert into pratos (nome, preco)values
+('Madesu', 'R$20,0'),
+('Fumbua Mabaku', 'R$25,0'),
+('Mbika', 'R$20,0'),
+('Loso Madesu', 'R$30,0'),
+('Makoso', 'R$23,50'),
+('Mayebo', 'R$30,0'),
+('Makayabu', 'R$35,0'),
+('Misili', 'R$15,0');
+
+insert into vendas (id_prato, id_vendedor, id_cliente, quantidade, preco)values
+('1','1','1','2', '40,0' ),
+('3','6','1','1', '30,0'),
+('6','5','1','3', '70,0'),
+('1','1','1','1', '40,0'),
+('7','5','1','4', '140,0'),
+('3','7','7','6', '120,0');
+
+insert into pratos_ingredientes () values

@@ -1,0 +1,249 @@
+create table Products(
+	id_productID serial,
+	id_supplierID int,
+	id_categoryID int,	
+	productName varchar (40) not null,
+	quantityPreunit varchar (20),
+	unitPrice money,
+	unitsInStock smallint,
+	unitsOnOrder smallint,
+	discontinued bit,
+    
+    constraint Product_pk primary key (id_productID),
+    constraint foreign key (id_categoryID) references Category (id_categoryID),
+    constraint foreign key (id_supplierID) references Suppliers (id_suplierID)
+);
+
+create table OderDetails(
+    id_oderID serial,
+    id_productID int,
+    unitPrice money,
+    quantity smallint,
+    discount real,
+    
+    constraint OderDetails primary key (id_oderDetails),
+    constraint foreign key (id_productID) references Products (id_product)
+    
+);
+
+create table Category(
+    id_categoryID serial,
+    categoryName varchar (15) not null,
+    description text,
+    
+   constraint category_pk primary key (id_categoryID)
+);
+
+create table Suppliers(
+    id_supplierID serial,
+    companyName varchar (40) not null,
+    contactName varchar (30) not null,
+    contactTitle varchar(30),
+    address varchar (60) not null,
+    city varchar (15) not null,
+    region varchar (15),
+    postalCode varchar (10) not null,
+    country varchar (15) not null,
+    phone varchar (24) not null,
+    fax varchar (24) not null,
+    homePage text,
+    
+    constraint supplier_pk primary key(id_supplierID)
+);
+
+create table Territories (
+    id_territoryID serial,
+    id_regionID    int,
+    territoryDescription varchar (50),
+    
+    
+    constraint territory_pk primary key(id_territory),
+    constraint foreign key (id_regionID) references Region (id_regionID)
+);
+
+create table EmployeeTerritories(
+	id_employeeID serial,
+	id_territoryID varchar (20),
+	
+	constraint employeeTerritories_pk primary key(id_employeeID),	
+	constraint foreign key (id_terriotoryID) references Territories()
+	
+);
+
+create table Employees(
+	id_employeeID serial,
+	lastName  varchar (20) not null,
+	firstName  varchar (10) not null,
+	title  varchar (30),
+	titleOfCourtesy varchar (25),
+	birthDate  date time,
+	hireDate date time,
+	address varchar (60),
+	city  varchar (15),
+	region varchar (15),
+	postCode varchar (10),
+	country varchar (15),
+	homePhone varchar (24),
+	extension varchar (nvarchar),
+	photo image,
+	notes text,
+	reportsTo int,
+	photosPath  varchar (255),
+
+	constrain employees_pk primary key (id_employeeID)
+create table Products(
+	id_product serial,
+	id_supplier int,
+	id_category int,	
+	productName varchar (40),
+	quantityPreunit varchar (20),
+	unitPrice money,
+	unitsInStock smallint,
+	unitsOnOrder smallint,
+	discontinued bit,
+    
+    constraint Product_pk primary key (id_product),
+    constraint id_category foreign key (id_category) references Category (id_category),
+    constraint id_supplier foreign key (id_supplier) references Suppliers (id_suplier)
+);
+
+create table OderDetails(
+    id_oder int,
+    id_product int,
+    unitPrice money,
+    quantity smallint,
+    discount int,
+    
+    constraint id_oder_pk foreign key (id_oder) references Oders(id_oder),
+    constraint id_product foreign key (id_product) references Products (id_product)
+);
+
+create table Category(
+    id_category serial,
+    categoryName varchar (15),
+    description text,
+    
+   constraint category_pk primary key (id_category)
+);
+
+create table Suppliers(
+    id_supplier serial,
+    companyName varchar (40),
+    contactName varchar (30),
+    contactTitle varchar(30),
+    address varchar (60),
+    city varchar (15),
+    region varchar (15),
+    postalCode varchar (10),
+    country varchar (15),
+    phone varchar (24),
+    fax varchar (24),
+    homePage text,
+    
+    constraint supplier_pk primary key(id_supplier)
+);
+
+create table Territories (
+    id_territory serial,
+    id_region    int,
+    territoryDescription varchar (50),
+    
+    constraint territory_pk primary key(id_territory)
+);
+
+create table EmployeeTerritories(
+	id_employee int,
+	id_territory int,
+	
+	constraint employeeTerritories foreign key(id_employee) references Employees(id_employee),	
+	constraint territories foreign key (id_territory) references territories(id_territory)
+);
+
+create table Employees(
+	id_employee serial,
+	lastName  varchar (20) not null,
+	firstName  varchar (10) not null,
+	title  varchar (30),
+	titleOfCourtesy varchar (25),
+	birthDate  date,
+	hireDate date,
+	address varchar (60),
+	city  varchar (15),
+	region varchar (15),
+	postCode varchar (10),
+	country varchar (15),
+	homePhone varchar (24),
+	extension varchar (5),
+	notes text,
+	reportsTo int,
+	photosPath  varchar (255),
+
+	constraint employees_pk primary key (id_employee)
+);
+
+create table Orders(
+	id_oder serial,
+	id_customer int,
+	id_employee int,
+	orderDate  date,
+	requieredDate date,
+	shippedDate  date,
+	shipVia  int,
+	freigth  money,
+	shipName varchar (40),
+	shipAddress varchar (60),
+	shipCity  varchar (15),
+	shipRegion varchar (15),
+	shipPostalCode varchar (10),
+	shipCountry varchar (15),  
+	
+	constraint oders_pk primary key (id_oder),
+	constraint id_customer foreign key (id_customer) references Customer (id_customer),
+	constraint id_employee foreign key (id_employee) references Employees (id_employee)
+);
+
+create table Shippers(
+	id_shipper serial,
+	companyName varchar (40) not null,
+	phone varchar (24),
+
+	constraint shipper_pk primary key (id_shipper),
+	constraint id_oder_pk foreign key (id_oder) references Orders (id_order)
+);
+
+create table CustomerDemographics(
+	id_customerType serial,
+	customerDesc text,
+	
+	constraint id_customerType_pk primary key (id_customerType)
+);
+
+create table CustomerCustomerDemo (
+	id_customer int,
+	id_customerDemographics int,
+
+	constraint id_customer_pk primary key (id_customer),
+	constraint id_customerDemoGraphics foreign key (id_customerDemoGraphics) references CustomerDemographics(id_customerDemoGraphics)
+);
+
+create table Customers (
+	id_customer varchar(5),
+	companyName varchar (40) not null,
+	contactName varchar (30) not null,
+	contactTitle varchar (30),
+	address  varchar (60),
+	city  varchar (15),
+	region varchar (15),
+	postalCode varchar (10),
+	country varchar (15),
+	phone varchar (24),
+	faxe varchar (24),
+
+	constraint id_customer_pk primary key (id_customer)
+);
+
+create table Region(
+	id_region serial,
+    regionDescription varchar(50),
+    constraint region_pk primary key (id_region)
+)

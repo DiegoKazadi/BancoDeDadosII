@@ -1,0 +1,40 @@
+create table Pessoas(
+	id_pessoa serial,
+    nome varchar(100),
+    
+    constraint pkid_pessoa Primary key (id_pessoa)
+);
+
+create table Curriculos (
+    id_pessoa serial,
+    tituloexp varchar(100),
+    funcao varchar(100),
+    datas date,
+    
+    constraint fkid_pessoa foreign key (id_pessoa) references Pessoas (id_pessoa)
+);
+
+create function CadastraPessoa(in nomep varchar(100)) returns void as 
+'
+	insert into Pessoas (nome) values (nomep)
+    
+'
+ language 'sql';
+
+create function CadastraCurriculo(in tituloexpe varchar(100), in funcaoe varchar(100), datase date)returns void as 
+'
+
+	insert into Curriculos (tituloexp, funcao, datas) values (tituloexpe, funcaoe, datase)
+
+'
+language 'sql';
+
+create function Busca(in id_pessoa int)returns as 
+'
+
+	select * from Pessoas as p inner join Curriculos as c on (p.id_pessoa = c.id_pessoa);
+
+'
+language 'sql';
+
+select Busca(1)
